@@ -2,9 +2,8 @@ import streamlit as st
 import numpy as np
 import joblib
 
-# Load trained model and scaler
-model = joblib.load('linear_model.pkl')
-scaler = joblib.load('scaler.pkl')
+# Load the trained Gradient Boosting model (no scaler needed)
+model = joblib.load('tuned_gradient_boosting_model.pkl')
 
 # Streamlit app interface
 st.set_page_config(page_title="Paris Housing Price Predictor")
@@ -29,11 +28,8 @@ if st.button("Predict Price"):
                              basement, attic, garage,
                              numPrevOwners, houseAge, amenityScore]])
 
-    # Scale inputs
-    input_scaled = scaler.transform(input_array)
-
-    # Make prediction
-    predicted_price = model.predict(input_scaled)[0]
+    # Make prediction (no scaling needed)
+    predicted_price = model.predict(input_array)[0]
 
     # Display prediction
     st.success(f"💶 Estimated Property Price: €{predicted_price:,.2f}")
